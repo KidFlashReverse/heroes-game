@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { getHero, getHeroesList } from "./utils";
-
-interface HeroeOption {
+import { getHero, getHeroesList, getRandomNumber } from "./utils";
+import { ClientComponent } from "./client-component";
+export interface HeroOption {
     id: number,
     name: string,
 }
 
 export default async function App(){
+    const idHero = getRandomNumber();
+    const getHeroToAcert = getHero(idHero);
     const heroesList = await getHeroesList();
 
+    const onChangeAction = async(id: string) => {
+        const data = await getHero(id);
+
+        return data;
+    }
     return (
         <div style={{
             width: '100vw',
@@ -17,15 +24,9 @@ export default async function App(){
             alignItems: 'center',
             justifyContent: 'center'
         }}>
-            <div>
-                <input list="heroes-list" />
-
-                <datalist id="heroes-list">
-                    {heroesList.map((option: HeroeOption) => (
-                        <option key={option.id} value={option.name}></option>
-                    ))}
-                </datalist>
-            </div>
+            <ClientComponent 
+                heroesList={heroesList}
+            />
         </div>
     );
 }
