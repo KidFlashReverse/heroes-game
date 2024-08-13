@@ -8,14 +8,17 @@ export interface HeroOption {
 
 export default async function App(){
     const idHero = getRandomNumber();
-    const getHeroToAcert = getHero(idHero);
+    const heroToAcert = await getHero(idHero);
     const heroesList = await getHeroesList();
 
-    const onChangeAction = async(id: string) => {
+    async function getSelectedHero(id: number) {
+        'use server';
+
         const data = await getHero(id);
 
         return data;
     }
+    
     return (
         <div style={{
             width: '100vw',
@@ -26,6 +29,8 @@ export default async function App(){
         }}>
             <ClientComponent 
                 heroesList={heroesList}
+                getSelectedHero={getSelectedHero}
+                heroToAcert={heroToAcert}
             />
         </div>
     );

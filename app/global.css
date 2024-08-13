@@ -3,3 +3,16 @@ body{
     margin: 0;
     background-color: rgb(22, 22, 22);
 }
+
+.box-text{
+    height: 70px;
+    width: 70px;
+    margin-left: 15px;
+    border: grey solid 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: arial;
+    text-transform: capitalize;
+}
