@@ -16,6 +16,8 @@ export function ClientComponent({
     const heroToAcertBases = heroToAcert.work.base.split(','); 
 
     const [selectedHeroes, setSelectedHeroes] = useState<Array<HeroData>>([]);
+    const [temporarySelectedCharacterId, setTemporarySelectedCharacterId] = useState<number>();
+    const [temporarySelectedCharacterName, setTemporarySelectedCharacterName] = useState<string>();
 
     const getHero = async(id: number) => {
         const data = await getSelectedHero(id);
@@ -67,12 +69,23 @@ export function ClientComponent({
             }}>
                 <input 
                     list="heroes-list" 
+                    value={temporarySelectedCharacterName}
                     onChange={(e) => {
                         const idSelectedHero = heroesList.find(option => option.name === e.target.value)?.id;
 
-                        if(idSelectedHero) getHero(idSelectedHero);
+                        setTemporarySelectedCharacterId(idSelectedHero);
+                        setTemporarySelectedCharacterName(e.target.value);
                     }}
                 />
+
+                <button style={{
+                    cursor: 'pointer'
+                }} 
+                onClick={() => {
+                    setTemporarySelectedCharacterId(undefined);
+                    setTemporarySelectedCharacterName(undefined);
+                    if(temporarySelectedCharacterId) getHero(temporarySelectedCharacterId);
+                }}>Submit</button>
 
                 <datalist id="heroes-list">
                     {heroesList.map((option: HeroOption) => {
